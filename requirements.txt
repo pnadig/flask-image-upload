@@ -3,3 +3,6 @@ Flask-PyMongo
 pymongo
 gevent
 Pillow
+opencv-python
+numpy
+six
