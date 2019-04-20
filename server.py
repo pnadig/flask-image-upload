@@ -104,7 +104,7 @@ def convert_image(fileid,imageformat):
         except NoFile:
             raise ValueError("File not found!")
         
-        ##if imageformat != 'jpeg' or imageformat != 'jpg' or imageformat != 'gif' or imageformat != 'png' or imageformat != 'svg':
+        ## SUPPORTED image formats:
         if imageformat in ['jpeg', 'jpg', 'gif', 'png', 'svg']:
             print('file format supported')
         else:
@@ -124,33 +124,11 @@ def convert_image(fileid,imageformat):
             return response
 
 
-        if imageformat == 'jpg':
-            ## TODO - get a different parser library other than PIL
-            #read image file string data
+        if imageformat == 'jpg' or imageformat == 'jpeg' :
             filestr = f.read()
             tempBuff = io.BytesIO()
             tempBuff.write(filestr)
             tempBuff.seek(0) #need to jump back to the beginning before handing it off to PIL
-            # Image.open(tempBuff)
-            # print(filestr)
-            #convert string data to numpy array
-            # npimg = numpy.frombuffer(filestr, numpy.uint8)
-            # print('npimg is')
-            # print(npimg)
-            # # convert numpy array to image
-            # img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
-            # if img is None:
-            #     print('img is')
-            #     print(img)
-            #     responsedata = {'response':'error converting image'}        
-            #     response = app.response_class(response=json.dumps(responsedata),
-            #                       status=500,
-            #                       mimetype='application/json')        
-            #     return response
-                
-            # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-            
             image = Image.open(tempBuff)
             cfilename = os.path.splitext(f.filename)[0]
             cfilename = cfilename + '.' + imageformat
@@ -159,18 +137,34 @@ def convert_image(fileid,imageformat):
             rgb_im = image.convert('RGB')
             rgb_im.save(img_io, 'JPEG')
             img_io.seek(0)
-            # image.save(img_io, imageformat)
-            # response = make_response(rgb_im.save(cfilename))
             response = send_file(img_io, as_attachment=True, attachment_filename=cfilename)
             response.mimetype = 'image/' + imageformat
             response.headers.set('Content-Disposition', 'attachment', filename=cfilename)
             return response
 
-        app.logger.info('%s filename', f.filename)
-        response = make_response(f.read())
-        response.mimetype = f.contentType ## 'image/jpeg'
-        response.headers.set('Content-Disposition', 'attachment', filename=f.filename)
-        return response
+        if imageformat == 'png' :
+            filestr = f.read()
+            tempBuff = io.BytesIO()
+            tempBuff.write(filestr)
+            tempBuff.seek(0) #need to jump back to the beginning before handing it off to PIL
+            image = Image.open(tempBuff)
+            cfilename = os.path.splitext(f.filename)[0]
+            cfilename = cfilename + '.' + imageformat
+            print(cfilename)
+            img_io = io.BytesIO()
+            rgb_im = image.convert('RGB')
+            rgb_im.save(img_io, 'PNG')
+            img_io.seek(0)
+            response = send_file(img_io, as_attachment=True, attachment_filename=cfilename)
+            response.mimetype = 'image/' + imageformat
+            response.headers.set('Content-Disposition', 'attachment', filename=cfilename)
+            return response
+
+        # app.logger.info('%s filename', f.filename)
+        # response = make_response(f.read())
+        # response.mimetype = f.contentType ## 'image/jpeg'
+        # response.headers.set('Content-Disposition', 'attachment', filename=f.filename)
+        # return response
 
 ## Transform image to a given image format 
 
