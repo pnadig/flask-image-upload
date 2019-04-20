@@ -6,3 +6,5 @@ Pillow
 opencv-python
 numpy
 six
+coverage
+nose
