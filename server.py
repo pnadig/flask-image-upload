@@ -7,6 +7,7 @@ from pymongo import MongoClient, errors
 from bson.objectid import ObjectId
 from gevent.pywsgi import WSGIServer
 import imghdr
+from config import config
 
 
 app = Flask(__name__)
@@ -15,8 +16,12 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 time.sleep(5) # hack for the mongoDb database to get running
 
-face_db_table = MongoClient('localhost', 32768).imagesdb.faces  # database collection name
-gridfs_db = MongoClient('localhost', 32768).imagesdb
+face_db_table = MongoClient(config['db']['url']).imagesdb.faces  # database collection name
+gridfs_db = MongoClient(config['db']['url']).imagesdb
+
+
+# face_db_table = MongoClient('localhost', 32768).imagesdb.faces  # database collection name
+# gridfs_db = MongoClient('localhost', 32768).imagesdb
 
 fs = gridfs.GridFS(gridfs_db)
 
