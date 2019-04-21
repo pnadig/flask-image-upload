@@ -91,8 +91,21 @@ class TestMain(unittest.TestCase):
         # ObjectId("5cbbb183cfc9651e3c2746da")
         # 5cbbe19dcfc9654b4850b64e
 
-        fileid = '5cbbb183cfc9651e3c2746da'  
+        fileid = '5cba6825ba190d313c7729fc'  
         queryurl = '/image/' + fileid             
+        response =  self.client.get(queryurl)                        
+        #print(response.status)
+        self.assertEqual(response.status, '200 OK')  
+    
+    ## Test Image Conversion 
+    def test_convert_image(self):    
+
+        # ObjectId("5cbbb183cfc9651e3c2746da")
+        # 5cbbe19dcfc9654b4850b64e
+
+        fileid = '5cba6825ba190d313c7729fc' 
+        fileformat = 'png' 
+        queryurl = '/image/' + fileid  + '/' + fileformat          
         response =  self.client.get(queryurl)                        
         #print(response.status)
         self.assertEqual(response.status, '200 OK')  

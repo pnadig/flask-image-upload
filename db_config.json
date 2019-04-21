@@ -1,6 +1,6 @@
 {
     "db": {
-            "url" : "mongodb://192.168.99.101:32768/",
+            "url" : "mongodb://localhost:27017/",
             "name" :"imagesdb",
             "user" :"",
             "password" :""

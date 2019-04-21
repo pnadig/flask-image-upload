@@ -160,6 +160,23 @@ def convert_image(fileid,imageformat):
             response.headers.set('Content-Disposition', 'attachment', filename=cfilename)
             return response
 
+        if imageformat == 'gif' :
+            filestr = f.read()
+            tempBuff = io.BytesIO()
+            tempBuff.write(filestr)
+            tempBuff.seek(0) #need to jump back to the beginning before handing it off to PIL
+            image = Image.open(tempBuff)
+            cfilename = os.path.splitext(f.filename)[0]
+            cfilename = cfilename + '.' + imageformat
+            print(cfilename)
+            img_io = io.BytesIO()
+            rgb_im = image.convert('RGB')
+            rgb_im.save(img_io, 'GIF')
+            img_io.seek(0)
+            response = send_file(img_io, as_attachment=True, attachment_filename=cfilename)
+            response.mimetype = 'image/' + imageformat
+            response.headers.set('Content-Disposition', 'attachment', filename=cfilename)
+            return response
         # app.logger.info('%s filename', f.filename)
         # response = make_response(f.read())
         # response.mimetype = f.contentType ## 'image/jpeg'
