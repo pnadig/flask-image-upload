@@ -8,6 +8,9 @@ services:
         ports:
             - "80:80"
             - "81:81"
+            - "82:82"
+            - "83:83"
+            - "84:84"
         depends_on:
             - mongo
             - app-upload
@@ -29,7 +32,34 @@ services:
             - "5001:5000"
         entrypoint: python ./server/get_image.py
         depends_on:
-            - mongo        
+            - mongo   
+    app-convert2jpg:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        ports:
+            - "5002:5000"
+        entrypoint: python ./server/convert_to_jpg.py
+        depends_on:
+            - mongo     
+    app-convert2png:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        ports:
+            - "5003:5000"
+        entrypoint: python ./server/convert_to_png.py
+        depends_on:
+            - mongo 
+    app-convert2gif:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        ports:
+            - "5004:5000"
+        entrypoint: python ./server/convert_to_gif.py
+        depends_on:
+            - mongo           
     mongo:
         image: mongo:latest
         ports:
