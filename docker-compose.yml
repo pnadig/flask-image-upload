@@ -1,6 +1,12 @@
 version: '3'
 
 services:
+    nginx:
+        build: ./nginx
+        ports:
+            - "80:80"
+        depends_on:
+            - mongo
     web-app:
         build: .
         ports:
@@ -9,6 +15,6 @@ services:
             - mongo
 
     mongo:
-        image: mongo:4.0.5-xenial
+        image: mongo:latest
         ports:
             - "27017:27017"
