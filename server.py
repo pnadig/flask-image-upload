@@ -187,11 +187,12 @@ def convert_image(fileid,imageformat):
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
-    app.run(debug=True, host='0.0.0.0', port=port)
+    ##app.run(debug=True, host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port)
 
 
 # if __name__ == '__main__':
-#     # app.run(port=5002, debug=True)
+#     app.run(port=5000, debug=True)
 
 #     # Serve the app with gevent
 #     http_server = WSGIServer(('', 5000), app)

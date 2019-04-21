@@ -2,18 +2,23 @@ version: '3'
 
 services:
     nginx:
-        build: ./nginx
+        build:
+            context: ./nginx
+            dockerfile: Dockerfile-nginx
         ports:
             - "80:80"
         depends_on:
             - mongo
+            - web-app
     web-app:
-        build: .
+        build:
+            context: ./
+            dockerfile: Dockerfile
         ports:
             - "5000:5000"
+        entrypoint: python server.py
         depends_on:
             - mongo
-
     mongo:
         image: mongo:latest
         ports:
