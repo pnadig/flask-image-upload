@@ -66,7 +66,7 @@ def image_upload():
                     filetype = 'svg'
                 localcontenttype = "image/" + filetype
                 fs.put(contents, content_type=localcontenttype, filename=filename)
-                face_db_table.insert({'face_image': filename})   #insert into database mongo db
+                face_db_table.insert_one({'face_image': filename})   #insert into database mongo db
         
         responsedata = {'success':'Image Upload Successfully'}        
         response = app.response_class(response=json.dumps(responsedata),

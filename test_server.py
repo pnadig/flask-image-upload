@@ -85,6 +85,17 @@ class TestMain(unittest.TestCase):
             #print(response.data)
             self.assertEqual(response.status, '200 OK')  
 
+    ## Test Image Retrieval 
+    def test_get_image(self):    
+
+        # ObjectId("5cbbb183cfc9651e3c2746da")
+        # 5cbbe19dcfc9654b4850b64e
+
+        fileid = '5cbbb183cfc9651e3c2746da'  
+        queryurl = '/image/' + fileid             
+        response =  self.client.get(queryurl)                        
+        #print(response.status)
+        self.assertEqual(response.status, '200 OK')  
 
 
 if __name__ == "__main__":
