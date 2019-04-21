@@ -7,9 +7,11 @@ services:
             dockerfile: Dockerfile-nginx
         ports:
             - "80:80"
+            - "81:81"
         depends_on:
             - mongo
             - app-upload
+            - app-getimage
     app-upload:
         build:
             context: ./
