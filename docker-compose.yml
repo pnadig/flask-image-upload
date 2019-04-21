@@ -9,16 +9,25 @@ services:
             - "80:80"
         depends_on:
             - mongo
-            - web-app
-    web-app:
+            - app-upload
+    app-upload:
         build:
             context: ./
             dockerfile: Dockerfile
         ports:
             - "5000:5000"
-        entrypoint: python server.py
+        entrypoint: python ./server/server.py
         depends_on:
             - mongo
+    app-getimage:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        ports:
+            - "5001:5000"
+        entrypoint: python ./server/get_image.py
+        depends_on:
+            - mongo        
     mongo:
         image: mongo:latest
         ports:

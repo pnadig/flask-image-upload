@@ -74,22 +74,22 @@ def image_upload():
                                   mimetype='application/json')        
         return response
 
-## Download/Retrieve image from Mongo GridFS given fileID
-@app.route('/image/<fileid>', methods=['GET'])
-def get_image(fileid):    
-    if request.method == 'GET':
-        fsobject = ObjectId(fileid)
-        # fsobject = fs.get(fsobject)
-        try:
-            f = fs.get(fsobject)
-        except NoFile:
-            raise ValueError("File not found!")
+# ## Download/Retrieve image from Mongo GridFS given fileID
+# @app.route('/image/<fileid>', methods=['GET'])
+# def get_image(fileid):    
+#     if request.method == 'GET':
+#         fsobject = ObjectId(fileid)
+#         # fsobject = fs.get(fsobject)
+#         try:
+#             f = fs.get(fsobject)
+#         except NoFile:
+#             raise ValueError("File not found!")
               
-        app.logger.info('%s filename', f.filename)
-        response = make_response(f.read())
-        response.mimetype = f.contentType ## 'image/jpeg'
-        response.headers.set('Content-Disposition', 'attachment', filename=f.filename)
-        return response
+#         app.logger.info('%s filename', f.filename)
+#         response = make_response(f.read())
+#         response.mimetype = f.contentType ## 'image/jpeg'
+#         response.headers.set('Content-Disposition', 'attachment', filename=f.filename)
+#         return response
 
 
 ## Download/Retrieve image from Mongo GridFS given fileID and imageFormat
