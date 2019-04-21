@@ -45,7 +45,7 @@ def image_upload():
             os.mkdir(target)     # create folder if not exits
     
     if request.method == 'POST':
-        for upload in request.files.getlist("face_image"): #multiple image handle
+        for upload in request.files.getlist("file"): #multiple image handle
             filename = secure_filename(upload.filename)
             destination = "/".join([target, filename])
             upload.save(destination)
